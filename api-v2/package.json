@@ -1,0 +1,23 @@
+{
+  "name": "api-v2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "apollo-server": "^2.13.1",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "graphql": "^15.0.0",
+    "pg": "^8.2.0"
+  },
+  "devDependencies": {
+    "husky": "^4.2.5",
+    "nodemon": "^2.0.3"
+  }
+}
