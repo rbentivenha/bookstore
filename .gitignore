@@ -1,2 +1,4 @@
 .vscode
 banco
+/api-v2/node_modules/
+/web/node_modules/
