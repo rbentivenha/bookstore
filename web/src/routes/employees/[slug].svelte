@@ -10,10 +10,10 @@
 </script>
 
 <script>
-  initial_value = {
+  initial_value = $employee_setter ? {
     ...$employee_setter,
     ...$employee_setter.address
-  };
+  } : {};
 </script>
 
 <svelte:head>

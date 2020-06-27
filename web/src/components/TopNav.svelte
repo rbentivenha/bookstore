@@ -1,4 +1,7 @@
 <script>
+	import { stores } from '@sapper/app';
+	const { preloading, page, session } = stores();
+
   export let segment;
   let colorClass = false;
   $: {
@@ -61,5 +64,6 @@
 </style>
 
 <div class={colorClass}>
-  <a href="#home">Home</a>
+  <a href="/">Home ></a>
+  <a href="{$page.path}">{$page.path.replace("/", " ")}</a>
 </div>

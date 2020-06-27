@@ -16,7 +16,7 @@
   }
 
   function handleChange({ detail: { value } }, inputKey) {
-    data[0][inputKey] = value;
+    data[inputKey] = value;
   }
 </script>
 

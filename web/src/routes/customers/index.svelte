@@ -1,13 +1,12 @@
 <script>
-  import { customers } from "../../store/customers.js";
+  import { customers, selected } from "../../store/customers.js";
   import Header from "../../components/Header.svelte";
   import List from "../../components/List/index.svelte";
   import Card from "../../components/Cards/index.svelte";
   import CollapsedSideNav from "../../components/CollapsedSideNav.svelte";
   import Button from "../../components/Button.svelte";
 
-  let selected = false,
-    address = false,
+  let address = false,
     sells = false,
     extra_hours = false,
     registred_products = false;
@@ -19,15 +18,11 @@
   function handleDelete() {}
 
   function handleSelect(employee) {
-    if (!selected) {
-      selected = employee;
-    } else {
-      selected = null;
-    }
+    selected.set(employee);
   }
 
   $: {
-    console.log($customers);
+    console.log($selected);
   }
 </script>
 
@@ -82,7 +77,7 @@
                 width="100"
                 height="100" />
               {customer.lname}, {customer.fname}
-              <a href={`/employees/${customer.user_id}`}>Editar</a>
+              <a href={`/customers/${customer.user_id}`}>Editar</a>
             </span>
             {#each $customers.meta as metadata}
               {#if metadata.type === 'Money'}
@@ -110,20 +105,18 @@
         width="100"
         height="100" />
     </div>
-    {#if selected}
+    {#if $selected}
       <Card border shadow inline>
         <span slot="title">Dados de Endereço</span>
 
         {#each $customers.address_meta as metadata}
-          <div>{metadata.title}: {selected.address[0][metadata.key]}</div>
+          <div>{metadata.title}: {$selected.address[0][metadata.key]}</div>
         {/each}
       </Card>
       <Card border shadow inline>
         <span slot="title">Dados de Compra</span>
         {#each $customers.buy_meta as metadata}
-          <div>
-            {metadata.title}: {selected.buy_stat[metadata.key]}
-          </div>
+          <div>{metadata.title}: {$selected.buy_stat[metadata.key]}</div>
         {/each}
       </Card>
     {/if}

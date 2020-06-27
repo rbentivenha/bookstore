@@ -1,4 +1,4 @@
-import { readable } from 'svelte/store'
+import { readable, writable } from 'svelte/store'
 import customer_service from '../services/customer.service/index'
 
 export const customers = readable(null, function start (set) {
@@ -32,3 +32,15 @@ export const customers = readable(null, function start (set) {
 
   return function stop () {}
 })
+
+export const selected = writable(null);
+
+export async function set_customer(payload) {
+  const new_employee = await customer_service.new_customer(payload);
+  return new_employee;
+}
+
+export async function update_customer(payload) {
+  const customer = await customer_service.update_customer(payload);
+  return customer;
+}

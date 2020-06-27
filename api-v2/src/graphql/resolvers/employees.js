@@ -22,7 +22,6 @@ module.exports = {
   },
   mutation: {
     createEmployee: async (_, { createEmployeeInput }, __) => {
-      console.log('createEmployeeInput', createEmployeeInput)
 
       const {
         rows: [{ user_id }]

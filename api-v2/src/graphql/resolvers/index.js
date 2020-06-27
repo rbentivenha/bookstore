@@ -7,7 +7,8 @@ const resolvers = {
     ...employees.query
   },
   Mutation: {
-    ...employees.mutation
+    ...employees.mutation,
+    ...customers.mutation
   },
   Employee: {
     ...employees.data_loaders

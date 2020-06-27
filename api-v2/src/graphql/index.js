@@ -50,6 +50,22 @@ const typeDefs = gql`
     cep: String
   }
 
+  input CustomerInput {
+    id: ID
+    fname: String
+    lname: String
+    cpf: String
+    email: String
+    bdate: String
+    phone: String
+    street_name: String
+    street_num: String
+    postal_code: String
+    user_type: String
+    city: String
+    cep: String
+  }
+
   type buy_stat {
     avg: Float
     count: Int
@@ -80,6 +96,8 @@ const typeDefs = gql`
   type Mutation {
     createEmployee(createEmployeeInput: EmployeeInput!): ID!
     editEmployee(editEmployeeInput: EmployeeInput!): Boolean
+    createCustomer(createCustomerInput: CustomerInput!): ID!
+    updateCustomer(updateCustomerInput: CustomerInput!): Boolean
   }
 `
 
