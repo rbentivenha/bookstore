@@ -2,6 +2,7 @@
   import Form from "./index.svelte";
   import { createEventDispatcher } from "svelte";
   import moment from "moment";
+  export let isEdit = false;
 
   const dispatch = createEventDispatcher();
   export let initial_value = [{
@@ -32,7 +33,7 @@
   ];
 
   let bdate = moment(parseInt(initial_value.bdate)).format("YYYY-MM-DD");
-  let data = {...initial_value, ...initial_value.address[0], bdate };
+  let data = isEdit ? {...initial_value, ...initial_value.address[0], bdate } : initial_value;
 
   function handleSubmit({ detail: { value } }) {
     dispatch("submit", {

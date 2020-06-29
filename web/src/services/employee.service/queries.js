@@ -7,8 +7,6 @@ const GET_EMPLOYEES = async () => {
       query: gql`
         {
           employees {
-            user_id
-            employee_id
             salary
             pis
             fname
@@ -34,7 +32,7 @@ const GET_EMPLOYEES_SELLING = async () => {
       query: gql`
         {
           employees {
-            user_id
+            cpf
             selling {
               avg
               count
@@ -56,7 +54,7 @@ const GET_EMPLOYEES_ADDRESS = async () => {
       query: gql`
         {
           employees {
-            user_id
+            cpf
             address {
               street_name
               street_num
@@ -78,8 +76,6 @@ const GET_EMPLOYEES_BY_ID = async payload => {
       query: gql`
         query($id: ID!) {
           employee(id: $id) {
-            user_id
-            employee_id
             salary
             pis
             fname

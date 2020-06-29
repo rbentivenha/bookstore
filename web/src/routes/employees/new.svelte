@@ -5,8 +5,7 @@
   import { employee_setter } from "../../store/employees.js";
 
   function handleSubmit({ detail: { value } }) {
-    value[0].salary = parseFloat(value[0].salary)
-    employee_setter.create(value[0]);
+    employee_setter.create(value);
   }
 </script>
 

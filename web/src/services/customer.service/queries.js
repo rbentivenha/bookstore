@@ -7,7 +7,6 @@ const GET_CUSTOMERS = async () => {
       query: gql`
         {
           customers {
-            user_id
             fname
             lname
             cpf

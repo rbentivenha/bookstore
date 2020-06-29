@@ -6,7 +6,6 @@ export const customers = readable(null, function start (set) {
   Promise.resolve(customers).then(res => {
     set({
       meta: [
-        { title: 'Cod', key: 'user_id', type: 'Number' },
         { title: 'CPF', type: 'String', key: 'cpf' },
         { title: 'Email', key: 'email', type: 'String' },
         { title: 'Data Criação', key: 'creation_date', type: 'Date' },

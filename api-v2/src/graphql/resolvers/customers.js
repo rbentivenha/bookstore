@@ -14,29 +14,27 @@ module.exports = {
       try {
         await db.query(
           `UPDATE users
-        SET fname = $1, lname = $2, cpf = $3, email = $4, bdate = $5, phone = $6
-        WHERE user_id = $7`,
+        SET fname = $1, lname = $2, email = $3, bdate = $4, phone = $5
+        WHERE cpf = $6`,
           [
             updateCustomerInput.fname,
             updateCustomerInput.lname,
-            updateCustomerInput.cpf,
             updateCustomerInput.email,
             updateCustomerInput.bdate,
             updateCustomerInput.phone,
-            parseInt(updateCustomerInput.id)
+            updateCustomerInput.cpf,
           ]
         )
 
         await db.query(
           `UPDATE address
-        SET street_name = $1, street_num = $2, postal_code = $3, city = $4
-        WHERE user_id = $5`,
+        SET street_name = $1, street_num = $2, city = $3
+        WHERE postal_code = $4`,
           [
             updateCustomerInput.street_name,
             updateCustomerInput.street_num,
-            updateCustomerInput.postal_code,
             updateCustomerInput.city,
-            parseInt(updateCustomerInput.id)
+            updateCustomerInput.postal_code
           ]
         )
 
@@ -47,15 +45,14 @@ module.exports = {
     },
     createCustomer: async (_, { createCustomerInput }, __) => {
       const {
-        rows: [{ user_id }]
+        rows: [{ cpf }]
       } = await db.query(
-        `INSERT INTO users (fname, lname, cpf, pwd, email, bdate, phone, user_type)
-        VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING user_id;`,
+        `INSERT INTO users (fname, lname, cpf, email, bdate, phone, user_type)
+        VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING cpf;`,
         [
           createCustomerInput.fname,
           createCustomerInput.lname,
           createCustomerInput.cpf,
-          'SenhaPadrão',
           createCustomerInput.email,
           createCustomerInput.bdate,
           createCustomerInput.phone,
@@ -64,10 +61,9 @@ module.exports = {
       )
 
       await db.query(
-        `INSERT INTO address (user_id, street_name, street_num, city, postal_code)
-        VALUES ($1, $2, $3, $4, $5);`,
+        `INSERT INTO address (street_name, street_num, city, postal_code)
+        VALUES ($1, $2, $3, $4);`,
         [
-          user_id,
           createCustomerInput.street_name,
           createCustomerInput.street_num,
           createCustomerInput.city,
@@ -75,14 +71,14 @@ module.exports = {
         ]
       )
 
-      return user_id
+      return cpf
     }
   },
   data_loaders: {
     address: async (parent, __, ___) => {
       const { rows } = await db.query(
-        `select * from address where address.user_id = $1`,
-        [parent.user_id]
+        `select * from address where address.postal_code = $1`,
+        [parent.postal_code]
       )
       return rows
     },
@@ -91,11 +87,11 @@ module.exports = {
         `select AVG(products.price), COUNT(products.title), MAX(products.price), MIN(products.price)
         from sell
         inner join products
-        on products.product_id = sell.product_id
+        on products.id = sell.product_id
         inner join users
-        on users.user_id = sell.employee_id
+        on users.cpf = sell.employee_id
         where sell.client_id = $1;`,
-        [parent.user_id]
+        [parent.cpf]
       )
       return rows[0]
     }

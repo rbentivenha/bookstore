@@ -6,7 +6,7 @@
 
   function handleSubmit({
     detail: {
-      value: [data]
+      value: data
     }
   }) {
     set_customer(data);

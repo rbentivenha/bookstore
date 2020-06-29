@@ -10,7 +10,22 @@ const CREATE_EMPLOYEE = async payload => {
         }
       `,
       variables: {
-        createEmployeeInput: payload
+        createEmployeeInput: {
+          fname: payload.fname,
+          lname: payload.lname,
+          pis: payload.pis,
+          salary: parseFloat(payload.salary),
+          cpf: payload.cpf,
+          email: payload.email,
+          bdate: payload.bdate,
+          phone: payload.phone,
+          street_name: payload.street_name,
+          street_num: payload.street_num,
+          postal_code: payload.postal_code,
+          user_type: payload.user_type,
+          city: payload.city,
+          cep: payload.cep
+        }
       }
     })
   } catch (err) {
@@ -27,7 +42,22 @@ const UPDATE_EMPLOYEE = async payload => {
         }
       `,
       variables: {
-        editEmployeeInput: payload
+        editEmployeeInput: {
+          fname: payload.fname,
+          lname: payload.lname,
+          pis: payload.pis,
+          salary: payload.salary,
+          cpf: payload.cpf,
+          email: payload.email,
+          bdate: payload.bdate,
+          phone: payload.phone,
+          street_name: payload.street_name,
+          street_num: payload.street_num,
+          postal_code: payload.postal_code,
+          user_type: payload.user_type,
+          city: payload.city,
+          cep: payload.cep
+        }
       }
     })
   } catch (err) {

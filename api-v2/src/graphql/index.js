@@ -3,7 +3,6 @@ const { gql } = require('apollo-server')
 const typeDefs = gql`
   type Employee {
     user_id: ID!
-    employee_id: ID!
     salary: Float
     pis: String
     fname: String
@@ -33,7 +32,6 @@ const typeDefs = gql`
   }
 
   input EmployeeInput {
-    id: ID
     fname: String
     lname: String
     pis: String
@@ -74,10 +72,9 @@ const typeDefs = gql`
   }
 
   type Customer {
-    user_id: ID!
     fname: String
     lname: String
-    cpf: String
+    cpf: String!
     email: String
     creation_date: String
     bdate: String
@@ -87,10 +84,26 @@ const typeDefs = gql`
     buy_stat: buy_stat
   }
 
+  type Product {
+    id: ID!
+    price: Float
+    title: String
+    descrip: String
+    status: Int
+  }
+
+  input ProductInput {
+    price: String
+    title: String
+    descrip: String
+    status: String
+  }
+
   type Query {
     employees: [Employee]
     employee(id: ID!): Employee
     customers: [Customer]
+    products: [Product]
   }
 
   type Mutation {
@@ -98,6 +111,7 @@ const typeDefs = gql`
     editEmployee(editEmployeeInput: EmployeeInput!): Boolean
     createCustomer(createCustomerInput: CustomerInput!): ID!
     updateCustomer(updateCustomerInput: CustomerInput!): Boolean
+    createProduct(createProductInput: ProductInput!): ID!
   }
 `
 

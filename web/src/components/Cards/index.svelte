@@ -4,6 +4,7 @@
   export let shadow = false;
   export let border = false;
   export let inline = false;
+  export let divider = false;
 
   const dispatch = createEventDispatcher();
 
@@ -64,11 +65,11 @@
   <div class="title">
     <slot name="title" />
   </div>
-  <div class="divider" />
+  <div class:divider />
   <div class="content">
     <slot />
   </div>
-  <div class="divider" />
+  <div class:divider />
   <div class="footer">
     <slot name="footer" />
   </div>

@@ -95,12 +95,12 @@
       </div>
     </div>
   </a>
-  <a href="/finance" id="contact">
+  <!-- <a href="/finance" id="contact">
     <div class="container">
-      <div class="left-column">Financeiro</div>
+      <div class="left-column">Vendas</div>
       <div class="right-column">
         <i class="fas fa-piggy-bank"></i>
       </div>
     </div>
-  </a>
+  </a> -->
 </div>

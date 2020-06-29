@@ -82,8 +82,8 @@
                 height="100" />
               {employee.lname}, {employee.fname}
               <a
-                href={`/employees/${employee.user_id}`}
-                on:click={() => handleEdit(employee.user_id)}>
+                href={`/employees/${employee.cpf}`}
+                on:click={() => handleEdit(employee.cpf)}>
                 Editar
               </a>
             </span>

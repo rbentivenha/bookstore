@@ -4,17 +4,17 @@ module.exports = {
   query: {
     employees: async (_, __, ___) => {
       const { rows } = await db.query(
-        `select * from employees
-                  inner join users
-                  on employees.user_id = users.user_id`
+        `select * from employee
+            inner join users
+            on employee.user_id = users.cpf`
       )
       return rows
     },
     employee: async (_, { id }, __) => {
       const { rows } = await db.query(
-        `select * from employees
+        `select * from employee
                   inner join users
-                  on employees.user_id = $1`,
+                  on employee.user_id = $1`,
         [id]
       )
       return rows[0]
@@ -22,17 +22,15 @@ module.exports = {
   },
   mutation: {
     createEmployee: async (_, { createEmployeeInput }, __) => {
-
       const {
-        rows: [{ user_id }]
+        rows: [{ cpf }]
       } = await db.query(
-        `INSERT INTO users (fname, lname, cpf, pwd, email, bdate, phone, user_type)
-        VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING user_id;`,
+        `INSERT INTO users (fname, lname, cpf, email, bdate, phone, user_type)
+        VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING cpf;`,
         [
           createEmployeeInput.fname,
           createEmployeeInput.lname,
           createEmployeeInput.cpf,
-          'SenhaPadrão',
           createEmployeeInput.email,
           createEmployeeInput.bdate,
           createEmployeeInput.phone,
@@ -41,10 +39,9 @@ module.exports = {
       )
 
       await db.query(
-        `INSERT INTO address (user_id, street_name, street_num, city, postal_code)
-        VALUES ($1, $2, $3, $4, $5);`,
+        `INSERT INTO address (street_name, street_num, city, postal_code)
+        VALUES ($1, $2, $3, $4);`,
         [
-          user_id,
           createEmployeeInput.street_name,
           createEmployeeInput.street_num,
           createEmployeeInput.city,
@@ -53,15 +50,54 @@ module.exports = {
       )
 
       await db.query(
-        `INSERT INTO employees (user_id, salary, pis)
+        `INSERT INTO employee (user_id, salary, pis)
         VALUES ($1, $2, $3);`,
-        [user_id, createEmployeeInput.salary, createEmployeeInput.pis]
+        [createEmployeeInput.cpf, createEmployeeInput.salary, createEmployeeInput.pis]
       )
 
-      return user_id
+      return cpf
     },
     editEmployee: async (_, { editEmployeeInput }, __) => {
-      return true
+      try {
+        await db.query(
+          `UPDATE users
+           SET fname = $1, lname = $2, email = $3, bdate = $4, phone = $5
+           WHERE cpf = $6`,
+          [
+            editEmployeeInput.fname,
+            editEmployeeInput.lname,
+            editEmployeeInput.email,
+            editEmployeeInput.bdate,
+            editEmployeeInput.phone,
+            editEmployeeInput.cpf
+          ]
+        )
+        await db.query(
+          `UPDATE employee
+           SET salary = $1, pis = $2
+           WHERE cpf = $3`,
+          [
+            editEmployeeInput.salary,
+            editEmployeeInput.pis,
+            editEmployeeInput.cpf
+          ]
+        )
+        await db.query(
+          `UPDATE address
+           SET street_name = $1, street_num = $2, city = $3
+           WHERE postal_code = $4`,
+          [
+            editEmployeeInput.street_name,
+            editEmployeeInput.street_num,
+            editEmployeeInput.city,
+            editEmployeeInput.postal_code
+          ]
+        )
+        return true
+      } catch (err) {
+        console.error(err);
+        return false
+      }
     }
   },
   data_loaders: {
@@ -70,20 +106,20 @@ module.exports = {
         `select AVG(products.price), COUNT(products.title), MAX(products.price), MIN(products.price)
           from sell
           inner join products
-          on products.product_id = sell.product_id
+          on products.id = sell.product_id
           inner join users
-          on users.user_id = sell.client_id
+          on users.cpf = sell.client_id
           where sell.employee_id = $1;`,
-        [parent.user_id]
+        [parent.cpf]
       )
       return rows[0]
     },
     address: async parent => {
       const { rows } = await db.query(
-        `select street_name, street_num, city, postal_code from employees
+        `select street_name, street_num, city, users.postal_code from users
             inner join address
-            on address.user_id = $1`,
-        [parent.user_id]
+            on users.postal_code = $1`,
+        [parent.postal_code]
       )
       return rows[0]
     }

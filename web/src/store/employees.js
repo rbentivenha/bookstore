@@ -6,7 +6,6 @@ export const employees = readable(null, function start (set) {
   Promise.resolve(employees).then(res => {
     set({
       meta: [
-        { title: 'Cod', key: 'employee_id', type: 'Number' },
         { title: 'Salário', key: 'salary', type: 'Money' },
         { title: 'PIS', key: 'pis', type: 'String' },
         { title: 'CPF', type: 'String', key: 'cpf' },

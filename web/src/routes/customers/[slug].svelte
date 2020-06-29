@@ -26,4 +26,4 @@
 
 <Header title="Cadastro de Cliente" />
 
-<NewUserForm initial_value={$selected} on:submit={handleSubmit} />
+<NewUserForm initial_value={$selected} on:submit={handleSubmit} isEdit />

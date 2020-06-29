@@ -20,10 +20,6 @@
   function handleSelect(employee) {
     selected.set(employee);
   }
-
-  $: {
-    console.log($selected);
-  }
 </script>
 
 <style>
