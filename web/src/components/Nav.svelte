@@ -16,7 +16,7 @@
     left: -115px;
     transition: 0.3s;
     padding: 15px;
-    width: 150px;
+    width: 180px;
     z-index: 1;
     text-decoration: none;
     font-size: 20px;
@@ -95,12 +95,12 @@
       </div>
     </div>
   </a>
-  <!-- <a href="/finance" id="contact">
+  <a href="/sales" id="contact">
     <div class="container">
       <div class="left-column">Vendas</div>
       <div class="right-column">
         <i class="fas fa-piggy-bank"></i>
       </div>
     </div>
-  </a> -->
+  </a>
 </div>

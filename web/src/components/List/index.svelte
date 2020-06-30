@@ -11,7 +11,7 @@
 </style>
 
 <ul>
-  <div class="container">
+  <div class="flex">
     <slot />
   </div>
 </ul>

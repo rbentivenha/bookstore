@@ -5,35 +5,12 @@
   export let segment;
 </script>
 
-<style>
-  .grid {
-    display: grid;
-    grid-template-columns: 5% 95%;
-    position: relative;
-    margin: 0 auto;
-  }
-
-  .content {
-    grid-column-start: 2;
-    grid-column-end: 4;
-  }
-
-  .topnav {
-    grid-row-start: 1;
-    grid-row-end: 2;
-    grid-column-start: 1;
-    grid-column-end: 4;
-    overflow: hidden;
-    background-color: #333;
-  }
-</style>
-
-<div class="grid">
-  <div class="topnav">
-    <TopNav {segment} />
+<TopNav {segment} />
+<div class="flex">
+  <div class="w-1/12 h-12">
+    <Nav {segment} />
   </div>
-  <Nav {segment} />
-  <main class="content">
+  <main class="w-11/12 h-12">
     <slot />
   </main>
 </div>

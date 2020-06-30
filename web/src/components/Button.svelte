@@ -1,5 +1,5 @@
 <script>
-    export let segment;
+  export let segment;
 </script>
 
 <style>
@@ -20,10 +20,11 @@
   }
 
   a {
-      text-decoration: none;
+    text-decoration: none;
   }
 </style>
 
-<a href="{segment}" class="btn">
+
+<a href={segment} class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
   <slot />
 </a>

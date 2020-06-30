@@ -1,12 +1,14 @@
 const customers = require('./customers')
 const employees = require('./employees')
 const products = require('./products')
+const sales = require('./sales')
 
 const resolvers = {
   Query: {
     ...products.query,
     ...customers.query,
-    ...employees.query
+    ...employees.query,
+    ...sales.query
   },
   Mutation: {
     ...products.mutation,

@@ -61,11 +61,11 @@
             on:clicked={handleSelect(product)}>
             <span slot="title">
               <img
-                src="https://lh3.googleusercontent.com/proxy/jsc6GwAbBxNcdgaZeMBuLcmzPkP6RxB6U6_ubE_z9OLerSs-pMM82mceSwFk6YT3jZf_xNzpAn0PlZUgqOz3Tm7xEhXfsRXKYAaSjA3lNVNomfosPtwq"
-                alt="User"
+                src="https://image.flaticon.com/icons/png/512/1146/1146751.png"
+                alt="Product"
                 width="100"
                 height="100" />
-              {product.title} Vendido: {product.status ? 'SIM' : 'NÃO'}
+              {product.title}
               <a href={`/stock/${product.id}`}>Editar</a>
             </span>
           </svelte:component>
@@ -76,7 +76,7 @@
   <span slot="content">
     <div class="img-container">
       <img
-        src="https://lh3.googleusercontent.com/proxy/jsc6GwAbBxNcdgaZeMBuLcmzPkP6RxB6U6_ubE_z9OLerSs-pMM82mceSwFk6YT3jZf_xNzpAn0PlZUgqOz3Tm7xEhXfsRXKYAaSjA3lNVNomfosPtwq"
+        src="https://image.flaticon.com/icons/png/512/1146/1146751.png"
         alt="Product"
         width="100"
         height="100" />

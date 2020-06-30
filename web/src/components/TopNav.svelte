@@ -15,7 +15,7 @@
       case "stock":
         colorClass = "topnav bgRed";
         break;
-      case "finance":
+      case "sales":
         colorClass = "topnav bgGrey";
         break;
     }
@@ -55,11 +55,6 @@
   .topnav a:hover {
     background-color: #ddd;
     color: black;
-  }
-
-  .topnav a.active {
-    background-color: #4caf50;
-    color: white;
   }
 </style>
 

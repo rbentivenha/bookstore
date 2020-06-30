@@ -9,6 +9,7 @@
     display: flex;
     width: 100%;
     margin-top: 10px;
+    margin-left: 20px;
   }
 
   .left-column {
@@ -24,7 +25,7 @@
 
 <div>
   <div class="left-column">
-    <h1>{title}</h1>
+    <h1 class="text-xl">{title}</h1>
   </div>
   <div class="right-column">
     <slot />

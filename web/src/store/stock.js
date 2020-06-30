@@ -30,7 +30,7 @@ export async function new_product(payload) {
   return new_product;
 }
 
-// export async function update_product(payload) {
-//   const product = await products_service.update_product(payload);
-//   return product;
-// }
+export async function update_product(payload) {
+  const product = await products_service.update_product(payload);
+  return product;
+}

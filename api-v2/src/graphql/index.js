@@ -93,10 +93,23 @@ const typeDefs = gql`
   }
 
   input ProductInput {
+    id: ID
     price: String
     title: String
     descrip: String
     status: String
+  }
+
+  type Sale {
+    id: ID!
+    pid: ID!
+    price: Float
+    title: String
+    descrip: String
+    cfname: String
+    clname: String
+    efname: String
+    elname: String
   }
 
   type Query {
@@ -104,6 +117,7 @@ const typeDefs = gql`
     employee(id: ID!): Employee
     customers: [Customer]
     products: [Product]
+    sales: [Sale]
   }
 
   type Mutation {
@@ -112,6 +126,7 @@ const typeDefs = gql`
     createCustomer(createCustomerInput: CustomerInput!): ID!
     updateCustomer(updateCustomerInput: CustomerInput!): Boolean
     createProduct(createProductInput: ProductInput!): ID!
+    updateProduct(updateProductInput: ProductInput!): Boolean
   }
 `
 
