@@ -3,13 +3,11 @@
   import NewUserForm from "../../components/Forms/NewUserForm.svelte";
   import Header from "../../components/Header.svelte";
   import { set_customer } from "../../store/customers.js";
+  import { goto } from "@sapper/app";
 
-  function handleSubmit({
-    detail: {
-      value: data
-    }
-  }) {
+  function handleSubmit({ detail: { value: data } }) {
     set_customer(data);
+    goto("/customers");
   }
 </script>
 

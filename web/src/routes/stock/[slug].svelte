@@ -1,7 +1,7 @@
 <script>
   import Form from "../../components/Forms/index.svelte";
   import Header from "../../components/Header.svelte";
-  import { update_product } from "../../store/stock.js";
+  import { update_product, selected } from "../../store/stock.js";
 
   const metadata = [
     { key: "price", label: "Preço", type: "Number" },
@@ -9,7 +9,7 @@
     { key: "descrip", label: "Descrição", type: "String" },
     { key: "status", label: "Status", type: "String" }
   ];
-  const data = {};
+  const data = $selected ? $selected : {};
 
   async function handleSubmit({ detail: { value } }) {
     await update_product(value);

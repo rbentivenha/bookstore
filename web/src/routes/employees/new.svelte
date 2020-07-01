@@ -2,10 +2,12 @@
   import Tab from "../../components/Tab.svelte";
   import NewEmployeeForm from "../../components/Forms/NewEmployeeForm.svelte";
   import Header from "../../components/Header.svelte";
-  import { employee_setter } from "../../store/employees.js";
+  import { employee_setter, create_employee } from "../../store/employees.js";
+  import { goto } from "@sapper/app";
 
-  function handleSubmit({ detail: { value } }) {
-    employee_setter.create(value);
+  async function handleSubmit({ detail: { value } }) {
+    await create_employee(value);
+    await goto("/employees");
   }
 </script>
 

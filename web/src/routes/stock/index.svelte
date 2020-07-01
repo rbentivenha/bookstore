@@ -1,10 +1,23 @@
+<script context="module">
+  import { get_products } from "../../store/stock.js";
+
+  export async function preload(page, session) {
+    const prod = await get_products();
+
+    return { prod };
+  }
+</script>
+
 <script>
-  import { products, selected } from "../../store/stock.js";
+  import { onMount } from "svelte";
+  import { products, selected, sell_product } from "../../store/stock.js";
   import Header from "../../components/Header.svelte";
   import List from "../../components/List/index.svelte";
   import Card from "../../components/Cards/index.svelte";
   import CollapsedSideNav from "../../components/CollapsedSideNav.svelte";
   import Button from "../../components/Button.svelte";
+
+  export let prod;
 
   function handleEdit() {}
 
@@ -12,6 +25,10 @@
 
   function handleSelect(product) {
     selected.set(product);
+  }
+
+  function handleSell(params) {
+    sell_product(params);
   }
 </script>
 
@@ -50,25 +67,28 @@
 </Header>
 
 <svelte:component this={CollapsedSideNav}>
-  {#if $products}
+  {#if prod}
     <div id="main">
       <List>
-        {#each $products.data as product, i}
-          <svelte:component
-            this={Card}
-            border
-            shadow
-            on:clicked={handleSelect(product)}>
-            <span slot="title">
-              <img
-                src="https://image.flaticon.com/icons/png/512/1146/1146751.png"
-                alt="Product"
-                width="100"
-                height="100" />
-              {product.title}
-              <a href={`/stock/${product.id}`}>Editar</a>
-            </span>
-          </svelte:component>
+        {#each prod as product, i}
+          <div class="w-1/5 p-2">
+            <svelte:component
+              this={Card}
+              border
+              shadow
+              on:clicked={handleSelect(product)}>
+              <span slot="title">
+                <img
+                  src="https://image.flaticon.com/icons/png/512/1146/1146751.png"
+                  alt="Product"
+                  width="100"
+                  height="100" />
+                {product.title}
+                <a href={`/stock/${product.id}`}>Editar</a>
+              </span>
+              <a href={`/stock/sell/${product.id}`}>Vender</a>
+            </svelte:component>
+          </div>
         {/each}
       </List>
     </div>
@@ -93,7 +113,9 @@
               {metadata.title}: {new Date(Number($selected[metadata.key])).toLocaleString('pt-BR')}
             </li>
           {:else}
-            <li>{metadata.title}: {$selected[metadata.key] ? $selected[metadata.key]: ""}</li>
+            <li>
+              {metadata.title}: {$selected[metadata.key] ? $selected[metadata.key] : ''}
+            </li>
           {/if}
         {/each}
       </Card>

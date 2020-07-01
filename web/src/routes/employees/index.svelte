@@ -3,7 +3,8 @@
     employees,
     employees_selling,
     employees_address,
-    employee_setter
+    employee_setter,
+    get_employee_by_id
   } from "../../store/employees.js";
   import Header from "../../components/Header.svelte";
   import List from "../../components/List/index.svelte";
@@ -20,7 +21,7 @@
   let tabs;
 
   function handleEdit(id) {
-    employee_setter.get_by_id(id);
+    // employee_setter.get_by_id(id);
   }
 
   function handleDelete() {}
@@ -69,38 +70,40 @@
     <div id="main">
       <List>
         {#each $employees.data as employee, i}
-          <svelte:component
-            this={Card}
-            border
-            shadow
-            on:clicked={handleSelect(employee)}>
-            <span slot="title">
-              <img
-                src="https://upload.wikimedia.org/wikipedia/commons/7/70/User_icon_BLACK-01.png"
-                alt="User"
-                width="100"
-                height="100" />
-              {employee.lname}, {employee.fname}
-              <a
-                href={`/employees/${employee.cpf}`}
-                on:click={() => handleEdit(employee.cpf)}>
-                Editar
-              </a>
-            </span>
-            {#each $employees.meta as metadata}
-              {#if metadata.type === 'Money'}
-                <li>
-                  {metadata.title}: R$ {employee[metadata.key].toFixed(2)}
-                </li>
-              {:else if metadata.type === 'Date'}
-                <li>
-                  {metadata.title}: {new Date(Number(employee[metadata.key])).toLocaleString('pt-BR')}
-                </li>
-              {:else}
-                <li>{metadata.title}: {employee[metadata.key]}</li>
-              {/if}
-            {/each}
-          </svelte:component>
+          <div class="w-1/5 p-2">
+            <svelte:component
+              this={Card}
+              border
+              shadow
+              on:clicked={handleSelect(employee)}>
+              <span slot="title">
+                <img
+                  src="https://upload.wikimedia.org/wikipedia/commons/7/70/User_icon_BLACK-01.png"
+                  alt="User"
+                  width="100"
+                  height="100" />
+                {employee.lname}, {employee.fname}
+                <a
+                  href={`/employees/${employee.cpf}`}
+                  on:click={() => handleEdit(employee.cpf)}>
+                  Editar
+                </a>
+              </span>
+              {#each $employees.meta as metadata}
+                {#if metadata.type === 'Money'}
+                  <li>
+                    {metadata.title}: R$ {employee[metadata.key].toFixed(2)}
+                  </li>
+                {:else if metadata.type === 'Date'}
+                  <li>
+                    {metadata.title}: {new Date(Number(employee[metadata.key])).toLocaleString('pt-BR')}
+                  </li>
+                {:else}
+                  <li>{metadata.title}: {employee[metadata.key]}</li>
+                {/if}
+              {/each}
+            </svelte:component>
+          </div>
         {/each}
       </List>
     </div>

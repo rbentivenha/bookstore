@@ -2,6 +2,7 @@
   import Form from "../../components/Forms/index.svelte";
   import Header from "../../components/Header.svelte";
   import { new_product } from "../../store/stock.js";
+  import { goto } from "@sapper/app";
 
   const metadata = [
     { key: "price", label: "Preço", type: "Number" },
@@ -13,6 +14,7 @@
 
   async function handleSubmit({ detail: { value } }) {
     await new_product(value);
+    await goto('/stock');
   }
 </script>
 

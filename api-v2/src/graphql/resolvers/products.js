@@ -12,6 +12,32 @@ module.exports = {
     }
   },
   mutation: {
+    sellProduct: async (_, { sellProductInput }, __) => {
+      const { rows } = await db.query(
+        `
+        INSERT INTO sell (product_id, client_id, employee_id)
+          VALUES ($1, $2, $3)
+          RETURNING id
+        `,
+        [
+          sellProductInput.id,
+          sellProductInput.customer,
+          sellProductInput.employee
+        ]
+      )
+
+      await db.query(
+        `UPDATE products
+         SET status = $1
+         WHERE id = $2`,
+        [
+          1,
+          sellProductInput.id
+        ]
+      )
+
+      return true
+    },
     createProduct: async (_, { createProductInput }, __) => {
       const { rows } = await db.query(
         `

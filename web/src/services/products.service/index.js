@@ -34,8 +34,20 @@ const update_product = async (payload) => {
   }
 }
 
+const sell_product = async (payload) => {
+  try {
+    const {
+      data: { updateProduct }
+    } = await Mutations.SELL_PRODUCT(payload)
+    return updateProduct
+  } catch (err) {
+    throw err
+  }
+}
+
 export default {
   get_products,
   new_product,
-  update_product
+  update_product,
+  sell_product
 }

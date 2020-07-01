@@ -61,8 +61,8 @@ function employee () {
 
   return {
     subscribe,
-    create: payload => {
-      Promise.resolve(employee_service.create_new_employee(payload)).then(
+    create: async payload => {
+      await Promise.resolve(employee_service.create_new_employee(payload)).then(
         res => {
           update(() => res)
         }
@@ -83,3 +83,18 @@ function employee () {
 }
 
 export const employee_setter = employee()
+
+export async function get_employee_by_id(payload) {
+  const employee = await employee_service.get_employee_by_id(payload);
+  return employee;
+}
+
+export async function update_employee(payload) {
+  const employee = await employee_service.update_employee(payload);
+  return employee;
+}
+
+export async function create_employee(payload) {
+  const new_employee = await employee_service.create_new_employee(payload);
+  return new_employee;
+}

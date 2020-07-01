@@ -2,6 +2,7 @@ const customers = require('./customers')
 const employees = require('./employees')
 const products = require('./products')
 const sales = require('./sales')
+const login = require('./login')
 
 const resolvers = {
   Query: {
@@ -11,6 +12,7 @@ const resolvers = {
     ...sales.query
   },
   Mutation: {
+    ...login.mutation,
     ...products.mutation,
     ...employees.mutation,
     ...customers.mutation

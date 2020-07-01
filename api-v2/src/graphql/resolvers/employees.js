@@ -14,7 +14,7 @@ module.exports = {
       const { rows } = await db.query(
         `select * from employee
                   inner join users
-                  on employee.user_id = $1`,
+                  on users.cpf = $1`,
         [id]
       )
       return rows[0]

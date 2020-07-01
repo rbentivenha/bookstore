@@ -29,7 +29,7 @@ const UPDATE_PRODUCT = async payload => {
       variables: {
         updateProductInput: {
           id: payload.id,
-          price: payload.price,
+          price: String(payload.price),
           title: payload.title,
           descrip: payload.descrip,
           status: payload.status
@@ -41,7 +41,29 @@ const UPDATE_PRODUCT = async payload => {
   }
 }
 
+const SELL_PRODUCT = async payload => {
+  try {
+    return await apolloClient.mutate({
+      mutation: gql`
+        mutation sellProduct($sellProductInput: sellProductInput!) {
+          sellProduct(sellProductInput: $sellProductInput)
+        }
+      `,
+      variables: {
+        sellProductInput: {
+          id: payload.id,
+          employee: payload.employee,
+          customer: payload.customer
+        }
+      }
+    })
+  } catch (err) {
+    throw err
+  }
+}
+
 export default {
   NEW_PRODUCT,
-  UPDATE_PRODUCT
+  UPDATE_PRODUCT,
+  SELL_PRODUCT
 }

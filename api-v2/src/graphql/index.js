@@ -2,7 +2,6 @@ const { gql } = require('apollo-server')
 
 const typeDefs = gql`
   type Employee {
-    user_id: ID!
     salary: Float
     pis: String
     fname: String
@@ -71,6 +70,12 @@ const typeDefs = gql`
     min: Float
   }
 
+  input sellProductInput {
+    id: ID!
+    employee: String
+    customer: String
+  }
+
   type Customer {
     fname: String
     lname: String
@@ -112,6 +117,10 @@ const typeDefs = gql`
     elname: String
   }
 
+  input LoginInput {
+    cpf: String
+  }
+
   type Query {
     employees: [Employee]
     employee(id: ID!): Employee
@@ -127,6 +136,8 @@ const typeDefs = gql`
     updateCustomer(updateCustomerInput: CustomerInput!): Boolean
     createProduct(createProductInput: ProductInput!): ID!
     updateProduct(updateProductInput: ProductInput!): Boolean
+    login(loginInput: LoginInput!): Employee
+    sellProduct(sellProductInput: sellProductInput!): Boolean
   }
 `
 

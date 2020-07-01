@@ -1,6 +1,10 @@
 import { readable, writable } from 'svelte/store'
 import products_service from '../services/products.service/index'
 
+export const get_products = async () => {
+  return await products_service.get_products()
+}
+
 export const products = readable(null, function start (set) {
   const products = products_service.get_products()
   Promise.resolve(products).then(res => {
@@ -32,5 +36,10 @@ export async function new_product(payload) {
 
 export async function update_product(payload) {
   const product = await products_service.update_product(payload);
+  return product;
+}
+
+export async function sell_product(payload) {
+  const product = await products_service.sell_product(payload);
   return product;
 }

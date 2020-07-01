@@ -1,5 +1,5 @@
 <script>
-  export let segment;
+  import { login } from "../store/auth.js";
 
   function openNav() {
     document.getElementById("mySidenav").style.width = "250px";
@@ -70,37 +70,43 @@
   }
 </style>
 
-<div id="mySidenav" class="sidenav">
-  <a href="/employees" id="about">
-    <div class="container">
-      <div class="left-column">Funcinários</div>
-      <div class="right-column">
-        <i class="fas fa-user-tie"></i>
+{#if $login}
+  <div id="mySidenav" class="sidenav">
+    {#if $login.user_type === "ADMIN"}
+      <a href="/employees" id="about">
+        <div class="container">
+          <div class="left-column">Funcionários</div>
+          <div class="right-column">
+            <i class="fas fa-user-tie" />
+          </div>
+        </div>
+      </a>
+      <a href="/customers" id="customers">
+        <div class="container">
+          <div class="left-column">Clientes</div>
+          <div class="right-column">
+            <i class="fas fa-user" />
+          </div>
+        </div>
+      </a>
+    {/if}
+    <a href="/stock" id="projects">
+      <div class="container">
+        <div class="left-column">Estoque</div>
+        <div class="right-column">
+          <i class="fas fa-book" />
+        </div>
       </div>
-    </div>
-  </a>
-  <a href="/customers" id="customers">
-    <div class="container">
-      <div class="left-column">Clientes</div>
-      <div class="right-column">
-        <i class="fas fa-user"></i>
-      </div>
-    </div>
-  </a>
-  <a href="/stock" id="projects">
-    <div class="container">
-      <div class="left-column">Estoque</div>
-      <div class="right-column">
-        <i class="fas fa-book"></i>
-      </div>
-    </div>
-  </a>
-  <a href="/sales" id="contact">
-    <div class="container">
-      <div class="left-column">Vendas</div>
-      <div class="right-column">
-        <i class="fas fa-piggy-bank"></i>
-      </div>
-    </div>
-  </a>
-</div>
+    </a>
+    {#if $login.user_type === "ADMIN"}
+      <a href="/sales" id="contact">
+        <div class="container">
+          <div class="left-column">Vendas</div>
+          <div class="right-column">
+            <i class="fas fa-piggy-bank" />
+          </div>
+        </div>
+      </a>
+    {/if}
+  </div>
+{/if}

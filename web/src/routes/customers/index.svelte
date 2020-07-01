@@ -61,34 +61,36 @@
     <div id="main">
       <List>
         {#each $customers.data as customer, i}
-          <svelte:component
-            this={Card}
-            border
-            shadow
-            on:clicked={handleSelect(customer)}>
-            <span slot="title">
-              <img
-                src="https://upload.wikimedia.org/wikipedia/commons/7/70/User_icon_BLACK-01.png"
-                alt="User"
-                width="100"
-                height="100" />
-              {customer.lname}, {customer.fname}
-              <a href={`/customers/${customer.user_id}`}>Editar</a>
-            </span>
-            {#each $customers.meta as metadata}
-              {#if metadata.type === 'Money'}
-                <li>
-                  {metadata.title}: R$ {customer[metadata.key].toFixed(2)}
-                </li>
-              {:else if metadata.type === 'Date'}
-                <li>
-                  {metadata.title}: {new Date(Number(customer[metadata.key])).toLocaleString('pt-BR')}
-                </li>
-              {:else}
-                <li>{metadata.title}: {customer[metadata.key]}</li>
-              {/if}
-            {/each}
-          </svelte:component>
+          <div class="w-1/5 p-2">
+            <svelte:component
+              this={Card}
+              border
+              shadow
+              on:clicked={handleSelect(customer)}>
+              <span slot="title">
+                <img
+                  src="https://upload.wikimedia.org/wikipedia/commons/7/70/User_icon_BLACK-01.png"
+                  alt="User"
+                  width="100"
+                  height="100" />
+                {customer.lname}, {customer.fname}
+                <a href={`/customers/${customer.user_id}`}>Editar</a>
+              </span>
+              {#each $customers.meta as metadata}
+                {#if metadata.type === 'Money'}
+                  <li>
+                    {metadata.title}: R$ {customer[metadata.key].toFixed(2)}
+                  </li>
+                {:else if metadata.type === 'Date'}
+                  <li>
+                    {metadata.title}: {new Date(Number(customer[metadata.key])).toLocaleString('pt-BR')}
+                  </li>
+                {:else}
+                  <li>{metadata.title}: {customer[metadata.key]}</li>
+                {/if}
+              {/each}
+            </svelte:component>
+          </div>
         {/each}
       </List>
     </div>
