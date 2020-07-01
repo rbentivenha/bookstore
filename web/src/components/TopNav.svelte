@@ -18,6 +18,9 @@
       case "sales":
         colorClass = "topnav bgGrey";
         break;
+      default:
+        colorClass = "topnav bgGrey";
+        break;
     }
   }
 </script>

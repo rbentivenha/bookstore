@@ -1,12 +1,17 @@
 <script>
-  import { login } from "../store/auth.js";
+  import { log_in } from "../store/auth.js";
   import { goto } from "@sapper/app";
+  import Header from "../components/Header.svelte";
+  import { stores } from "@sapper/app";
+  const { session } = stores();
+
   let value = "";
 
   async function handleLogIn() {
     try {
-      login.login(value);
-      await goto('/employees');
+      const user = await log_in(value);
+      session.set({user: user});
+      await goto("/employees");
     } catch (err) {
       console.error(err);
     }
@@ -17,37 +22,33 @@
   <title>Login</title>
 </svelte:head>
 
-<div class="container">
-  <form class="w-full max-w-sm mx-auto mt-20">
-    <div class="md:flex md:items-center mb-6">
-      <div class="md:w-1/3">
-        <label
-          class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"
-          for="inline-full-name">
-          CPF
-        </label>
-      </div>
-      <div class="md:w-2/3">
-        <input
-          class="bg-gray-200 appearance-none border-2 border-gray-200 rounded
-          w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none
-          focus:bg-white focus:border-purple-500"
-          id="inline-full-name"
-          type="text"
-          bind:value />
-      </div>
+<Header title="Login" />
+
+<div class="w-full max-w-xs mx-auto">
+  <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
+        CPF
+      </label>
+      <input
+        bind:value
+        class="shadow appearance-none border rounded w-full py-2 px-3
+        text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="username"
+        type="text"
+        placeholder="CPF" />
     </div>
-    <div class="md:flex md:items-center">
-      <div class="md:w-1/3" />
-      <div class="md:w-2/3">
-        <button
-          class="shadow bg-blue-500 hover:bg-purple-400 focus:shadow-outline
-          focus:outline-none text-white font-bold py-2 px-4 rounded"
-          type="button"
-          on:click|preventDefault={handleLogIn}>
-          Acessar
-        </button>
-      </div>
+    <div class="flex items-center justify-between">
+      <button
+        on:click|preventDefault={handleLogIn}
+        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4
+        rounded focus:outline-none focus:shadow-outline"
+        type="button">
+        Acessar
+      </button>
     </div>
   </form>
+  <p class="text-center text-gray-500 text-xs">
+    &copy;2020 Acme Corp. All rights reserved.
+  </p>
 </div>

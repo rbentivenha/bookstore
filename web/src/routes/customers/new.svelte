@@ -6,8 +6,8 @@
   import { goto } from "@sapper/app";
 
   function handleSubmit({ detail: { value: data } }) {
-    set_customer(data);
-    goto("/customers");
+    Promise.resolve(set_customer(data));
+    Promise.resolve(goto("/customers?v=x", history.replaceState));
   }
 </script>
 

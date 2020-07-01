@@ -15,4 +15,9 @@ function login_store () {
   }
 }
 
+export async function log_in (payload) {
+  const user = await auth_service.login(payload);
+  return user
+}
+
 export const login = login_store()

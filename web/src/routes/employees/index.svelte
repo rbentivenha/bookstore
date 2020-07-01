@@ -1,4 +1,6 @@
 <script>
+  import { stores } from "@sapper/app";
+  const { preloading, page, session } = stores();
   import {
     employees,
     employees_selling,
@@ -59,86 +61,88 @@
   <title>Consulta: Funcionários</title>
 </svelte:head>
 
-<Header title="Consulta: Funcionários">
-  <div class="create_employee">
-    <Button segment={`/employees/new`}>Criar funcionário</Button>
-  </div>
-</Header>
+{#if $session.user}
+  <Header title="Consulta: Funcionários">
+    <div class="create_employee">
+      <Button segment={`/employees/new`}>Criar funcionário</Button>
+    </div>
+  </Header>
 
-<svelte:component this={CollapsedSideNav}>
-  {#if $employees}
-    <div id="main">
-      <List>
-        {#each $employees.data as employee, i}
-          <div class="w-1/5 p-2">
-            <svelte:component
-              this={Card}
-              border
-              shadow
-              on:clicked={handleSelect(employee)}>
-              <span slot="title">
-                <img
-                  src="https://upload.wikimedia.org/wikipedia/commons/7/70/User_icon_BLACK-01.png"
-                  alt="User"
-                  width="100"
-                  height="100" />
-                {employee.lname}, {employee.fname}
-                <a
-                  href={`/employees/${employee.cpf}`}
-                  on:click={() => handleEdit(employee.cpf)}>
-                  Editar
-                </a>
-              </span>
-              {#each $employees.meta as metadata}
-                {#if metadata.type === 'Money'}
-                  <li>
-                    {metadata.title}: R$ {employee[metadata.key].toFixed(2)}
-                  </li>
-                {:else if metadata.type === 'Date'}
-                  <li>
-                    {metadata.title}: {new Date(Number(employee[metadata.key])).toLocaleString('pt-BR')}
-                  </li>
-                {:else}
-                  <li>{metadata.title}: {employee[metadata.key]}</li>
-                {/if}
-              {/each}
-            </svelte:component>
-          </div>
-        {/each}
-      </List>
-    </div>
-  {/if}
-  <span slot="content">
-    <div class="img-container">
-      <img
-        src="https://upload.wikimedia.org/wikipedia/commons/7/70/User_icon_BLACK-01.png"
-        alt="User"
-        width="100"
-        height="100" />
-    </div>
-    <Card border shadow inline>
-      <span slot="title">Dados de Endereço</span>
-      {#if $employees_address}
-        {#each $employees_address.meta as metadata}
-          {#if selected}
-            <div>
-              {metadata.title}: {$employees_address.data.filter(el => el.user_id === selected.user_id)[0].address[metadata.key]}
+  <svelte:component this={CollapsedSideNav}>
+    {#if $employees}
+      <div id="main">
+        <List>
+          {#each $employees.data as employee, i}
+            <div class="w-1/5 p-2">
+              <svelte:component
+                this={Card}
+                border
+                shadow
+                on:clicked={handleSelect(employee)}>
+                <span slot="title">
+                  <img
+                    src="https://upload.wikimedia.org/wikipedia/commons/7/70/User_icon_BLACK-01.png"
+                    alt="User"
+                    width="100"
+                    height="100" />
+                  {employee.lname}, {employee.fname}
+                  <a
+                    href={`/employees/${employee.cpf}`}
+                    on:click={() => handleEdit(employee.cpf)}>
+                    Editar
+                  </a>
+                </span>
+                {#each $employees.meta as metadata}
+                  {#if metadata.type === 'Money'}
+                    <li>
+                      {metadata.title}: R$ {employee[metadata.key]}
+                    </li>
+                  {:else if metadata.type === 'Date'}
+                    <li>
+                      {metadata.title}: {new Date(Number(employee[metadata.key])).toLocaleString('pt-BR')}
+                    </li>
+                  {:else}
+                    <li>{metadata.title}: {employee[metadata.key]}</li>
+                  {/if}
+                {/each}
+              </svelte:component>
             </div>
-          {/if}
-        {/each}
-      {/if}
-    </Card>
-    <Card border shadow inline>
-      <span slot="title">Dados de Venda</span>
-      {#if $employees_selling}
-        {#each $employees_selling.meta as metadata}
-          {#if selected}
-            <div>
-              {metadata.title}: {$employees_selling.data.filter(el => el.user_id === selected.user_id)[0].selling[metadata.key]}
-            </div>
-          {/if}
-        {/each}
-      {/if}
-    </Card>
-  </span>
-</svelte:component>
+          {/each}
+        </List>
+      </div>
+    {/if}
+    <span slot="content">
+      <div class="img-container">
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/7/70/User_icon_BLACK-01.png"
+          alt="User"
+          width="100"
+          height="100" />
+      </div>
+      <Card border shadow inline>
+        <span slot="title">Dados de Endereço</span>
+        {#if $employees_address}
+          {#each $employees_address.meta as metadata}
+            {#if selected}
+              <div>
+                {metadata.title}: {$employees_address.data.filter(el => el.user_id === selected.user_id)[0].address[metadata.key]}
+              </div>
+            {/if}
+          {/each}
+        {/if}
+      </Card>
+      <Card border shadow inline>
+        <span slot="title">Dados de Venda</span>
+        {#if $employees_selling}
+          {#each $employees_selling.meta as metadata}
+            {#if selected}
+              <div>
+                {metadata.title}: {$employees_selling.data.filter(el => el.user_id === selected.user_id)[0].selling[metadata.key]}
+              </div>
+            {/if}
+          {/each}
+        {/if}
+      </Card>
+    </span>
+  </svelte:component>
+{/if}

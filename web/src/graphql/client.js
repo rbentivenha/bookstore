@@ -6,4 +6,15 @@ const client = new ApolloClient({
   fetch: fetch
 });
 
+client.defaultOptions = {
+  watchQuery: {
+    fetchPolicy: 'no-cache',
+    errorPolicy: 'ignore',
+  },
+  query: {
+    fetchPolicy: 'no-cache',
+    errorPolicy: 'all',
+  }
+};
+
 export default client;

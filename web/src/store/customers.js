@@ -34,6 +34,11 @@ export const customers = readable(null, function start (set) {
 
 export const selected = writable(null);
 
+export async function get_customers() {
+  const customers = await customer_service.get_customers()
+  return customers
+}
+
 export async function set_customer(payload) {
   const new_employee = await customer_service.new_customer(payload);
   return new_employee;

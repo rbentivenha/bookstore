@@ -1,5 +1,6 @@
 <script>
-  import { login } from "../store/auth.js";
+	import { stores } from '@sapper/app';
+	const { preloading, page, session } = stores();
 
   function openNav() {
     document.getElementById("mySidenav").style.width = "250px";
@@ -70,9 +71,9 @@
   }
 </style>
 
-{#if $login}
+{#if $session.user}
   <div id="mySidenav" class="sidenav">
-    {#if $login.user_type === "ADMIN"}
+    {#if $session.user.user_type === "ADMIN"}
       <a href="/employees" id="about">
         <div class="container">
           <div class="left-column">Funcionários</div>
@@ -98,7 +99,7 @@
         </div>
       </div>
     </a>
-    {#if $login.user_type === "ADMIN"}
+    {#if $session.user.user_type === "ADMIN"}
       <a href="/sales" id="contact">
         <div class="container">
           <div class="left-column">Vendas</div>

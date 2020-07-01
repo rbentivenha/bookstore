@@ -7,7 +7,7 @@
 
   async function handleSubmit({ detail: { value } }) {
     await create_employee(value);
-    await goto("/employees");
+    await goto("/employees", history.replaceState);
   }
 </script>
 
