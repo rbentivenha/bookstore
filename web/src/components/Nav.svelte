@@ -71,9 +71,9 @@
   }
 </style>
 
-{#if $session.user}
+<!-- {#if $session.user} -->
   <div id="mySidenav" class="sidenav">
-    {#if $session.user.user_type === "ADMIN"}
+    <!-- {#if $session.user.user_type === "ADMIN"} -->
       <a href="/employees" id="about">
         <div class="container">
           <div class="left-column">Funcionários</div>
@@ -90,7 +90,7 @@
           </div>
         </div>
       </a>
-    {/if}
+    <!-- {/if} -->
     <a href="/stock" id="projects">
       <div class="container">
         <div class="left-column">Estoque</div>
@@ -99,7 +99,7 @@
         </div>
       </div>
     </a>
-    {#if $session.user.user_type === "ADMIN"}
+    <!-- {#if $session.user.user_type === "ADMIN"} -->
       <a href="/sales" id="contact">
         <div class="container">
           <div class="left-column">Vendas</div>
@@ -108,6 +108,6 @@
           </div>
         </div>
       </a>
-    {/if}
+    <!-- {/if} -->
   </div>
-{/if}
+<!-- {/if} -->

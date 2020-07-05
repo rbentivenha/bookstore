@@ -12,6 +12,6 @@
 <Header title="Consulta: Vendas">
 </Header>
 
-{#if $sales && $session.user}
+<!-- {#if $sales && $session.user} -->
   <DataTable metadata={$sales.meta} data={$sales.data} />
-{/if}
+<!-- {/if} -->

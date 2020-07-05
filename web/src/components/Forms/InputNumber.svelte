@@ -12,43 +12,16 @@
   }
 </script>
 
-<style>
-  .container {
-    display: flex;
-    margin: 0 auto;
-  }
-
-  .column-left {
-    float: left;
-    width: 40%;
-  }
-
-  .column-right {
-    float: right;
-    width: 50%;
-    margin: 5px;
-  }
-
-  label {
-    display: block;
-    text-align: end;
-    padding: 8px;
-  }
-
-  input {
-    font-family: Arial, Helvetica, sans-serif;
-    border: 1px solid rgb(119, 116, 116);
-    font-size: 16px;
-    padding: 8px;
-    width: 50%;
-  }
-</style>
-
 <div class="container">
-  <div class="column-left">
-    <label>{label}</label>
-  </div>
-  <div class="column-right">
-    <input type="number" on:input={handleInput} {value} />
-  </div>
+  <label
+    class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+    {label}
+  </label>
+  <input
+    class="appearance-none block w-full bg-gray-200 text-gray-700 border
+    border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none
+    focus:bg-white focus:border-gray-500"
+    type="number"
+    on:input={handleInput}
+    {value} />
 </div>

@@ -9,7 +9,7 @@
 
   async function handleLogIn() {
     try {
-      const user = await log_in(value);
+      // const user = await log_in(value);
       session.set({user: user});
       await goto("/employees");
     } catch (err) {
@@ -48,7 +48,4 @@
       </button>
     </div>
   </form>
-  <p class="text-center text-gray-500 text-xs">
-    &copy;2020 Acme Corp. All rights reserved.
-  </p>
 </div>

@@ -77,7 +77,7 @@
   </div>
 </Header>
 
-{#if $session.user}
+<!-- {#if $session.user} -->
   <svelte:component this={CollapsedSideNav}>
     {#if _customers && $customers}
       <div id="main">
@@ -142,4 +142,4 @@
       {/if}
     </span>
   </svelte:component>
-{/if}
+<!-- {/if} -->

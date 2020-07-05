@@ -25,24 +25,23 @@
     z-index: 1;
     top: 0;
     left: 100%;
-    background-color: rgb(59, 58, 58);
+    background-color: rgb(69, 74, 119);
     overflow-x: hidden;
     transition: 0.5s;
     padding-top: 60px;
-    box-shadow: -1px 0 4px rgb(29, 28, 77);
   }
 
   .sidebar div {
     padding: 8px 8px 8px 32px;
     text-decoration: none;
     font-size: 25px;
-    color: #818181;
+    color: #000000;
     display: block;
     transition: 0.3s;
   }
 
   .sidebar div:hover {
-    color: #f1f1f1;
+    color: #1a1a1a;
   }
 
   .sidebar .closebtn {

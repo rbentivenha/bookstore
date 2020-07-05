@@ -12,34 +12,12 @@ const get_employees = async () => {
   }
 }
 
-const get_employees_selling = async () => {
+const create_employee = async payload => {
   try {
     const {
-      data: { employees }
-    } = await Queries.GET_EMPLOYEES_SELLING()
-    return employees
-  } catch (err) {
-    throw err
-  }
-}
-
-const get_employees_address = async () => {
-  try {
-    const {
-      data: { employees }
-    } = await Queries.GET_EMPLOYEES_ADDRESS()
-    return employees
-  } catch (err) {
-    throw err
-  }
-}
-
-const create_new_employee = async payload => {
-  try {
-    const {
-      data: { createEmployee }
+      data: { create_employee }
     } = await Mutations.CREATE_EMPLOYEE(payload)
-    return createEmployee
+    return create_employee
   } catch (err) {
     throw err
   }
@@ -48,20 +26,20 @@ const create_new_employee = async payload => {
 const update_employee = async payload => {
   try {
     const {
-      data: { editEmployee }
+      data: { update_employee }
     } = await Mutations.UPDATE_EMPLOYEE(payload)
-    return editEmployee
+    return update_employee
   } catch (err) {
     throw err
   }
 }
 
-const get_employee_by_id = async payload => {
+const create_extra_hour = async payload => {
   try {
     const {
-      data: { employee }
-    } = await Queries.GET_EMPLOYEES_BY_ID(payload)
-    return employee
+      data: { create_extra_hour }
+    } = await Mutations.CREATE_EXTRA_HOUR(payload)
+    return create_extra_hour
   } catch (err) {
     throw err
   }
@@ -69,9 +47,7 @@ const get_employee_by_id = async payload => {
 
 export default {
   get_employees,
-  get_employees_selling,
-  get_employees_address,
-  create_new_employee,
+  create_employee,
   update_employee,
-  get_employee_by_id
+  create_extra_hour
 }

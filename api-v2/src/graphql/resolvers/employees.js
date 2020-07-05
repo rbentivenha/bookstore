@@ -4,124 +4,116 @@ module.exports = {
   query: {
     employees: async (_, __, ___) => {
       const { rows } = await db.query(
-        `select * from employee
+        `
+        select * from employee
             inner join users
-            on employee.user_id = users.cpf`
+            on employee.ucpf = users.cpf
+        `
       )
       return rows
-    },
-    employee: async (_, { id }, __) => {
-      const { rows } = await db.query(
-        `select * from employee
-                  inner join users
-                  on users.cpf = $1`,
-        [id]
-      )
-      return rows[0]
     }
   },
   mutation: {
-    createEmployee: async (_, { createEmployeeInput }, __) => {
-      const {
-        rows: [{ cpf }]
-      } = await db.query(
-        `INSERT INTO users (fname, lname, cpf, email, bdate, phone, user_type)
-        VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING cpf;`,
-        [
-          createEmployeeInput.fname,
-          createEmployeeInput.lname,
-          createEmployeeInput.cpf,
-          createEmployeeInput.email,
-          createEmployeeInput.bdate,
-          createEmployeeInput.phone,
-          createEmployeeInput.user_type
-        ]
-      )
-
-      await db.query(
-        `INSERT INTO address (street_name, street_num, city, postal_code)
-        VALUES ($1, $2, $3, $4);`,
-        [
-          createEmployeeInput.street_name,
-          createEmployeeInput.street_num,
-          createEmployeeInput.city,
-          createEmployeeInput.postal_code
-        ]
-      )
-
-      await db.query(
-        `INSERT INTO employee (user_id, salary, pis)
-        VALUES ($1, $2, $3);`,
-        [createEmployeeInput.cpf, createEmployeeInput.salary, createEmployeeInput.pis]
-      )
-
-      return cpf
-    },
-    editEmployee: async (_, { editEmployeeInput }, __) => {
+    create_extra_hour: async (_, { extraHourInput }, __) => {
       try {
-        await db.query(
-          `UPDATE users
-           SET fname = $1, lname = $2, email = $3, bdate = $4, phone = $5
-           WHERE cpf = $6`,
-          [
-            editEmployeeInput.fname,
-            editEmployeeInput.lname,
-            editEmployeeInput.email,
-            editEmployeeInput.bdate,
-            editEmployeeInput.phone,
-            editEmployeeInput.cpf
-          ]
+        const {
+          rows: [{ epis }]
+        } = await db.query(
+          `
+            insert into extra_hours (epis, date, amount)
+            values ($1, $2, $3)
+            returning epis
+          `,
+          [extraHourInput.pis, extraHourInput.date, extraHourInput.amount]
         )
-        await db.query(
-          `UPDATE employee
-           SET salary = $1, pis = $2
-           WHERE cpf = $3`,
-          [
-            editEmployeeInput.salary,
-            editEmployeeInput.pis,
-            editEmployeeInput.cpf
-          ]
-        )
-        await db.query(
-          `UPDATE address
-           SET street_name = $1, street_num = $2, city = $3
-           WHERE postal_code = $4`,
-          [
-            editEmployeeInput.street_name,
-            editEmployeeInput.street_num,
-            editEmployeeInput.city,
-            editEmployeeInput.postal_code
-          ]
-        )
-        return true
+        return epis
       } catch (err) {
-        console.error(err);
-        return false
+        console.error(err)
+      }
+    },
+    update_employee: async (_, { employeeInput }, __) => {
+      try {
+        const {
+          rows: [{ pis }]
+        } = await db.query(
+          `
+            update employee
+            set salary = $1
+            where employee.pis = $2
+            returning pis
+          `,
+          [employeeInput.salary, employeeInput.pis]
+        )
+        return pis
+      } catch (err) {
+        console.error(err)
+      }
+    },
+    create_employee: async (_, { employeeInput }, ___) => {
+      try {
+        const {
+          rows: [{ pis }]
+        } = await db.query(
+          `
+          insert into employee (ucpf, salary, pis)
+          values ($1, $2, $3)
+          returning pis
+          `,
+          [employeeInput.ucpf, employeeInput.salary, employeeInput.pis]
+        )
+        return pis
+      } catch (err) {
+        console.error(err)
+        return employeeInput.pis
       }
     }
   },
   data_loaders: {
-    selling: async parent => {
+    sales: async (parent, __, ___) => {
       const { rows } = await db.query(
-        `select AVG(products.price), COUNT(products.title), MAX(products.price), MIN(products.price)
-          from sell
+        `
+        select * from items_sale
+          inner join sale
+          on items_sale.said = sale.id
           inner join products
-          on products.id = sell.product_id
-          inner join users
-          on users.cpf = sell.client_id
-          where sell.employee_id = $1;`,
-        [parent.cpf]
+          on items_sale.pid = products.id
+          where sale.epis = $1
+        `,
+        [parent.pis]
       )
-      return rows[0]
+      return rows
     },
-    address: async parent => {
+    registredProducts: async (parent, __, ___) => {
       const { rows } = await db.query(
-        `select street_name, street_num, city, users.postal_code from users
-            inner join address
-            on users.postal_code = $1`,
+        `
+        select * from products
+          inner join item_reg
+          on item_reg.id = products.regid
+          where item_reg.epis = $1
+        `,
+        [parent.pis]
+      )
+      return rows
+    },
+    address: async (parent, __, ___) => {
+      const { rows } = await db.query(
+        `
+        select * from address
+          where address.postal_code = $1
+        `,
         [parent.postal_code]
       )
       return rows[0]
+    },
+    extra_hours: async (parent, __, ___) => {
+      const { rows } = await db.query(
+        `
+        select * from extra_hours
+          where extra_hours.epis = $1
+        `,
+        [parent.pis]
+      )
+      return rows
     }
   }
 }

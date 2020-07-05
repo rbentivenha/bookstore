@@ -5,35 +5,43 @@
   export let isEdit = false;
 
   const dispatch = createEventDispatcher();
-  export let initial_value = [{
-    fname: "",
-    lname: "",
-    cpf: "",
-    email: "",
-    bdate: "",
-    phone: "",
-    user_type: "",
-    street_num: "",
-    city: "",
-    postal_code: ""
-  }];
-
-  let meta = [
-    { key: "fname", label: "Nome", type: "String" },
-    { key: "lname", label: "Sobrenome", type: "String" },
-    { key: "cpf", label: "CPF", type: "String" },
-    { key: "email", label: "Email", type: "String" },
-    { key: "bdate", label: "Aniversário", type: "Date" },
-    { key: "phone", label: "Telefone", type: "String" },
-    { key: "user_type", label: "Tipo de Usuário", type: "String" },
-    { key: "street_name", label: "Rua", type: "String" },
-    { key: "street_num", label: "Numero", type: "String" },
-    { key: "city", label: "Cidade", type: "String" },
-    { key: "postal_code", label: "CEP", type: "String" }
+  export let initial_value = [
+    {
+      fname: "",
+      lname: "",
+      cpf: "",
+      email: "",
+      bdate: "",
+      phone: "",
+      user_type: "",
+      street_num: "",
+      city: "",
+      postal_code: ""
+    }
   ];
 
+  let schema = {
+    column1: [
+      { key: "fname", label: "Nome", type: "String" },
+      { key: "lname", label: "Sobrenome", type: "String" },
+      { key: "ucpf", label: "CPF", type: "String" },
+      { key: "email", label: "Email", type: "String" },
+      { key: "bdate", label: "Aniversário", type: "Date" }
+    ],
+    column2: [
+      { key: "phone", label: "Telefone", type: "String" },
+      { key: "user_type", label: "Tipo de Usuário", type: "String" },
+      { key: "street_name", label: "Rua", type: "String" },
+      { key: "street_num", label: "Numero", type: "String" },
+      { key: "city", label: "Cidade", type: "String" },
+      { key: "postal_code", label: "CEP", type: "String" }
+    ]
+  };
+
   let bdate = moment(parseInt(initial_value.bdate)).format("YYYY-MM-DD");
-  let data = isEdit ? {...initial_value, ...initial_value.address[0], bdate } : initial_value;
+  let data = isEdit
+    ? { ...initial_value, ...initial_value.address[0], bdate }
+    : initial_value;
 
   function handleSubmit({ detail: { value } }) {
     dispatch("submit", {
@@ -42,4 +50,4 @@
   }
 </script>
 
-<Form metadata={meta} {data} on:submit={handleSubmit} />
+<Form metadata={schema.column1} {data} on:submit={handleSubmit} />

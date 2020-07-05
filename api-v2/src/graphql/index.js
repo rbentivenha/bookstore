@@ -2,142 +2,97 @@ const { gql } = require('apollo-server')
 
 const typeDefs = gql`
   type Employee {
+    ucpf: String!
     salary: Float
-    pis: String
+    pis: String!
     fname: String
     lname: String
-    cpf: String
     email: String
     creation_date: String
     bdate: String
     phone: String
+    postal_code: String!
+    address: Address
+    extra_hours: [ExtraHours]
+    registredProducts: [Products]
+    sales: [Sales]
     user_type: String
-    selling: employee_sell
-    address: address
   }
 
-  type employee_sell {
-    avg: Float
-    count: Int
-    max: Float
-    min: Float
-  }
-
-  type address {
-    street_name: String
-    street_num: String
-    city: String
-    postal_code: String
-  }
-
-  input EmployeeInput {
-    fname: String
-    lname: String
-    pis: String
-    salary: Float
-    cpf: String
-    email: String
-    bdate: String
-    phone: String
-    street_name: String
-    street_num: String
-    postal_code: String
-    user_type: String
-    city: String
-    cep: String
-  }
-
-  input CustomerInput {
-    id: ID
-    fname: String
-    lname: String
-    cpf: String
-    email: String
-    bdate: String
-    phone: String
-    street_name: String
-    street_num: String
-    postal_code: String
-    user_type: String
-    city: String
-    cep: String
-  }
-
-  type buy_stat {
-    avg: Float
-    count: Int
-    max: Float
-    min: Float
-  }
-
-  input sellProductInput {
+  type Products {
     id: ID!
-    employee: String
-    customer: String
-  }
-
-  type Customer {
-    fname: String
-    lname: String
-    cpf: String!
-    email: String
-    creation_date: String
-    bdate: String
-    phone: String
-    user_type: String
-    address: [address]
-    buy_stat: buy_stat
-  }
-
-  type Product {
-    id: ID!
+    regid: ID!
     price: Float
     title: String
     descrip: String
-    status: Int
+    regdate: String
   }
 
-  input ProductInput {
-    id: ID
-    price: String
-    title: String
-    descrip: String
-    status: String
-  }
-
-  type Sale {
-    id: ID!
+  type Sales {
+    said: ID!
     pid: ID!
+    saledate: String
+    ucpf: String!
+    epis: String!
     price: Float
     title: String
     descrip: String
-    cfname: String
-    clname: String
-    efname: String
-    elname: String
   }
 
-  input LoginInput {
-    cpf: String
+  type ExtraHours {
+    date: String
+    amount: String
+  }
+
+  type Address {
+    postal_code: String!
+    street_name: String
+    street_num: String
+    city: String
   }
 
   type Query {
     employees: [Employee]
-    employee(id: ID!): Employee
-    customers: [Customer]
-    products: [Product]
-    sales: [Sale]
+  }
+
+  input UserInput {
+    fname: String
+    lname: String
+    cpf: String!
+    email: String
+    bdate: String
+    phone: String
+    postal_code: String!
+    user_type: String!
+  }
+
+  input EmployeeInput {
+    pis: String!
+    ucpf: String!
+    salary: Float
+  }
+
+  input AddressInput {
+    street_name: String
+    street_num: String
+    city: String
+    postal_code: String!
+  }
+
+  input ExtraHourInput {
+    pis: String!
+    amount: Float!
+    date: String!
   }
 
   type Mutation {
-    createEmployee(createEmployeeInput: EmployeeInput!): ID!
-    editEmployee(editEmployeeInput: EmployeeInput!): Boolean
-    createCustomer(createCustomerInput: CustomerInput!): ID!
-    updateCustomer(updateCustomerInput: CustomerInput!): Boolean
-    createProduct(createProductInput: ProductInput!): ID!
-    updateProduct(updateProductInput: ProductInput!): Boolean
-    login(loginInput: LoginInput!): Employee
-    sellProduct(sellProductInput: sellProductInput!): Boolean
+    create_user(userInput: UserInput!): String!
+    create_employee(employeeInput: EmployeeInput!): String!
+    create_address(addressInput: AddressInput!): String!
+    update_user(userInput: UserInput!): String!
+    update_employee(employeeInput: EmployeeInput!): String!
+    update_address(addressInput: AddressInput!): String!
+    create_extra_hour(extraHourInput: ExtraHourInput!): String!
   }
 `
 

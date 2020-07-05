@@ -5,26 +5,15 @@ const CREATE_EMPLOYEE = async payload => {
   try {
     return await apolloClient.mutate({
       mutation: gql`
-        mutation createEmployee($createEmployeeInput: EmployeeInput!) {
-          createEmployee(createEmployeeInput: $createEmployeeInput)
+        mutation create_employee($employeeInput: EmployeeInput!) {
+          create_employee(employeeInput: $employeeInput)
         }
       `,
       variables: {
-        createEmployeeInput: {
-          fname: payload.fname,
-          lname: payload.lname,
+        employeeInput: {
           pis: payload.pis,
-          salary: parseFloat(payload.salary),
-          cpf: payload.cpf,
-          email: payload.email,
-          bdate: payload.bdate,
-          phone: payload.phone,
-          street_name: payload.street_name,
-          street_num: payload.street_num,
-          postal_code: payload.postal_code,
-          user_type: payload.user_type,
-          city: payload.city,
-          cep: payload.cep
+          ucpf: payload.cpf,
+          salary: parseFloat(payload.salary)
         }
       }
     })
@@ -37,26 +26,15 @@ const UPDATE_EMPLOYEE = async payload => {
   try {
     return await apolloClient.mutate({
       mutation: gql`
-        mutation editEmployee($editEmployeeInput: EmployeeInput!) {
-          editEmployee(editEmployeeInput: $editEmployeeInput)
+        mutation update_employee($employeeInput: EmployeeInput!) {
+          update_employee(employeeInput: $employeeInput)
         }
       `,
       variables: {
-        editEmployeeInput: {
-          fname: payload.fname,
-          lname: payload.lname,
+        employeeInput: {
           pis: payload.pis,
           salary: payload.salary,
-          cpf: payload.cpf,
-          email: payload.email,
-          bdate: payload.bdate,
-          phone: payload.phone,
-          street_name: payload.street_name,
-          street_num: payload.street_num,
-          postal_code: payload.postal_code,
-          user_type: payload.user_type,
-          city: payload.city,
-          cep: payload.cep
+          ucpf: payload.ucpf
         }
       }
     })
@@ -65,7 +43,30 @@ const UPDATE_EMPLOYEE = async payload => {
   }
 }
 
+const CREATE_EXTRA_HOUR = async payload => {
+  try {
+    return await apolloClient.mutate({
+      mutation: gql`
+        mutation create_extra_hour($extraHourInput: ExtraHourInput!) {
+          create_extra_hour(extraHourInput: $extraHourInput)
+        }
+      `,
+      variables: {
+        extraHourInput: {
+          pis: payload.pis,
+          amount: parseFloat(payload.amount),
+          date: payload.date
+        }
+      }
+    })
+  } catch (err) {
+    throw err
+  }
+}
+CREATE_EXTRA_HOUR
+
 export default {
   CREATE_EMPLOYEE,
-  UPDATE_EMPLOYEE
+  UPDATE_EMPLOYEE,
+  CREATE_EXTRA_HOUR
 }

@@ -2,32 +2,11 @@
   export let title = "";
 </script>
 
-<style>
-  div {
-    font-size: 14px;
-    text-align: start;
-    display: flex;
-    width: 100%;
-    margin-top: 10px;
-    margin-left: 20px;
-  }
-
-  .left-column {
-    width: 80%;
-    float: left;
-  }
-
-  .right-column {
-    width: 20%;
-    float: right;
-  }
-</style>
-
-<div>
-  <div class="left-column">
-    <h1 class="text-xl">{title}</h1>
+<div class="flex my-2 py-2 justify-between items-center">
+  <div>
+    <h1 class="text-3xl">{title}</h1>
   </div>
-  <div class="right-column">
+  <div class="bg-grey-500">
     <slot />
   </div>
 </div>
