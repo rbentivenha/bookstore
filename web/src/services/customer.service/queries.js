@@ -7,26 +7,27 @@ const GET_CUSTOMERS = async () => {
       query: gql`
         {
           customers {
+            cpf
             fname
             lname
-            cpf
             email
             creation_date
             bdate
             phone
-            user_type
             address {
+              postal_code
               street_name
               street_num
               city
-              postal_code
             }
-            buy_stat {
-              avg
-              count
-              max
-              min
+            shopping {
+              ucpf
+              price
+              title
+              descrip
+              saledate
             }
+            user_type
           }
         }
       `

@@ -1,29 +1,26 @@
 <script context="module">
-  import Tab from "../../components/Tab.svelte";
   import NewUserForm from "../../components/Forms/NewUserForm.svelte";
   import Header from "../../components/Header.svelte";
-  import { update_customer, selected } from "../../store/customers.js"
+  import moment from "moment";
+  import { selected } from "../../store/customers.js";
 
-  let user_id;
-
+  let initial_value;
+  let id;
   export async function preload({ params, query }) {
-    user_id = params.slug;
-    // the `slug` parameter is available because
-    // this file is called [slug].svelte
+    id = params.slug;
   }
 </script>
 
 <script>
-  async function handleSubmit({ detail: { value } }) {
-
-      await update_customer(value)
-  }
+  const customer = $selected;
+  const bdate = moment(parseInt($selected.bdate)).format("YYYY-MM-DD");
+  initial_value = { ...customer, ...customer.address, bdate, ucpf: id };
 </script>
 
 <svelte:head>
   <title>Editar Cliente</title>
 </svelte:head>
 
-<Header title="Cadastro de Cliente" />
+<Header title="Edição de Cliente" />
 
-<NewUserForm initial_value={$selected} on:submit={handleSubmit} isEdit />
+<NewUserForm {initial_value} isEdit={true} />

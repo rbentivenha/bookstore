@@ -1,13 +1,10 @@
 <script>
   import Form from "./index.svelte";
   import FloatingButtons from "../Buttons/FloatingButtons.svelte";
-  import { createEventDispatcher } from "svelte";
   import { goto } from "@sapper/app";
   import { create_address, update_address } from "../../store/address";
   import { create_user, update_user } from "../../store/user";
   import { create_employee, update_employee, selected } from "../../store/employees";
-
-  const dispatch = createEventDispatcher();
 
   export let isEdit = false;
   export let initial_value = {
@@ -83,7 +80,6 @@
     } catch (err) {
       console.error(err);
     }
-    console.log(data);
   }
 </script>
 

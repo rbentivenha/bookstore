@@ -51,8 +51,31 @@ const typeDefs = gql`
     city: String
   }
 
+  type Shop {
+    ucpf: String!
+    price: Float!
+    title: String
+    descrip: String
+    saledate: String
+  }
+
+  type Customer {
+    cpf: String!
+    fname: String
+    lname: String
+    email: String
+    creation_date: String
+    bdate: String
+    phone: String
+    postal_code: String!
+    address: Address
+    shopping: [Shop]
+    user_type: String
+  }
+
   type Query {
     employees: [Employee]
+    customers: [Customer]
   }
 
   input UserInput {

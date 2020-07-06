@@ -23,10 +23,10 @@ const resolvers = {
   },
   Employee: {
     ...employees.data_loaders
-  }
-  // Customer: {
-  //   ...customers.data_loaders
-  // },
+  },
+  Customer: {
+    ...customers.data_loaders
+  },
   // Product: {
   //   ...products.data_loaders
   // }
