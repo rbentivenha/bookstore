@@ -1,24 +1,40 @@
 <script>
+  import { stores } from "@sapper/app";
+  const { session } = stores();
   import Form from "../../../components/Forms/index.svelte";
   import Header from "../../../components/Header.svelte";
-  import { sell_product, selected } from "../../../store/stock.js";
+  import { selected, sell } from "../../../store/stock.js";
+  import Button from "../../../components/Button.svelte";
 
   const metadata = [
-    { key: "id", label: "Cód", type: "Number" },
-    { key: "customer", label: "Cliente", type: "String" },
-    { key: "employee", label: "Vendedor", type: "String" }
+    { key: "pid", label: "Cód", type: "Number" },
+    { key: "ucpf", label: "Cliente", type: "String" }
   ];
-  const data = {};
+  let data = { pid: null, ucpf: null };
 
-  async function handleSubmit({ detail: { value } }) {
-    await sell_product({...$selected, ...value});
+  function handleChange({ detail: { value } }) {
+    data = value;
+  }
+
+  async function handleClick() {
+    console.log("handleClick -> value", data)
+    console.log("handleClick -> $session", $session)
+    await sell({...data, epis: $session.user})
   }
 </script>
 
 <svelte:head>
-  <title>Cadastro de Produto</title>
+  <title>Venda</title>
 </svelte:head>
 
-<Header title="Cadastro de Produto" />
+<Header title="Venda de Produto" />
 
-<Form {metadata} {data} on:submit={handleSubmit} />
+<Form {metadata} {data} on:change={handleChange} />
+<div class="flex fixed w-full">
+  <button
+    on:click={handleClick}
+    class="mx-auto my-5 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2
+    px-6 rounded">
+    Salvar
+  </button>
+</div>

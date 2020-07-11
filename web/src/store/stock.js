@@ -10,15 +10,12 @@ export const products = readable(null, function start (set) {
   Promise.resolve(products).then(res => {
     set({
       meta: [
-        { title: 'Cod', key: 'product_id', type: 'Number' },
+        { title: 'Cod', key: 'id', type: 'Number' },
         { title: 'Preço', type: 'Money', key: 'price' },
         { title: 'Título', key: 'title', type: 'String' },
         { title: 'Descrição', key: 'descrip', type: 'String' },
-        { title: 'Autor', key: 'author', type: 'String' },
-        { title: 'ISBN', key: 'isbn', type: 'String' },
-        { title: 'Edição', key: 'edition', type: 'String' },
-        { title: 'Editora', key: 'editor', type: 'String' },
-        { title: 'CDD', key: 'cdd', type: 'String' }
+        { title: 'Colaborador', key: 'epis', type: 'String' },
+        { title: 'Data', key: 'regdate', type: 'Date' }
       ],
       data: res
     })
@@ -29,17 +26,22 @@ export const products = readable(null, function start (set) {
 
 export const selected = writable(null);
 
+export async function new_product_registry(payload) {
+  const new_product_registry = await products_service.new_product_registry(payload);
+  return new_product_registry;
+}
+
 export async function new_product(payload) {
   const new_product = await products_service.new_product(payload);
   return new_product;
 }
 
 export async function update_product(payload) {
-  const product = await products_service.update_product(payload);
-  return product;
+  const update_product = await products_service.update_product(payload);
+  return update_product;
 }
 
-export async function sell_product(payload) {
-  const product = await products_service.sell_product(payload);
-  return product;
+export async function sell(payload) {
+  const sell = await products_service.sell(payload);
+  return sell;
 }

@@ -6,15 +6,11 @@ export const sales = readable(null, function start (set) {
   Promise.resolve(sales).then(res => {
     set({
       meta: [
-        { title: 'Cliente', key: 'cfname', type: 'String' },
-        { title: 'Sobrenome', type: 'String', key: 'clname' },
-        { title: 'Descrição', key: 'descrip', type: 'String' },
-        { title: 'Colaborador', key: 'efname', type: 'String' },
-        { title: 'Sobrenome', key: 'elname', type: 'String' },
-        { title: 'id', key: 'id', type: 'Number' },
-        { title: 'Produto', key: 'pid', type: 'Number' },
-        { title: 'Preço', key: 'price', type: 'Number' },
-        { title: 'Titulo', key: 'title', type: 'String' }
+        { title: 'Preço', key: 'price', type: 'String' },
+        { title: 'Descrição', type: 'String', key: 'descrip' },
+        { title: 'Data', key: 'saledate', type: 'Date' },
+        { title: 'Cliente', key: 'customer', type: 'String' },
+        { title: 'Colaborador', key: 'employee', type: 'String' }
       ],
       data: res
     })

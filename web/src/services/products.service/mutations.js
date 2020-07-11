@@ -1,16 +1,36 @@
 import gql from 'graphql-tag'
 import apolloClient from '../../graphql/client.js'
 
+const NEW_PRODUCT_REGISTRY = async payload => {
+  try {
+    return await apolloClient.mutate({
+      mutation: gql`
+        mutation($epis: String!) {
+          new_product_registry(epis: $epis)
+        }
+      `,
+      variables: {
+        epis: payload
+      }
+    })
+  } catch (err) {
+    throw err
+  }
+}
+
 const NEW_PRODUCT = async payload => {
   try {
     return await apolloClient.mutate({
       mutation: gql`
-        mutation createProduct($createProductInput: ProductInput!) {
-          createProduct(createProductInput: $createProductInput)
+        mutation($productInput: ProductInput!) {
+          create_product(productInput: $productInput)
         }
       `,
       variables: {
-        createProductInput: payload
+        productInput: { 
+          ...payload,
+          price: parseFloat(payload.price)
+        }
       }
     })
   } catch (err) {
@@ -22,17 +42,17 @@ const UPDATE_PRODUCT = async payload => {
   try {
     return await apolloClient.mutate({
       mutation: gql`
-        mutation updateProduct($updateProductInput: ProductInput!) {
-          updateProduct(updateProductInput: $updateProductInput)
+        mutation($productInput: ProductInput!) {
+          update_product(productInput: $productInput)
         }
       `,
       variables: {
-        updateProductInput: {
+        productInput: { 
           id: payload.id,
-          price: String(payload.price),
+          regid: payload.regid,
+          price: parseFloat(payload.price),
           title: payload.title,
-          descrip: payload.descrip,
-          status: payload.status
+          descrip: payload.descrip
         }
       }
     })
@@ -41,19 +61,19 @@ const UPDATE_PRODUCT = async payload => {
   }
 }
 
-const SELL_PRODUCT = async payload => {
+const SELL = async payload => {
   try {
     return await apolloClient.mutate({
       mutation: gql`
-        mutation sellProduct($sellProductInput: sellProductInput!) {
-          sellProduct(sellProductInput: $sellProductInput)
+        mutation($sellInput: SellInput!) {
+          sell(sellInput: $sellInput)
         }
       `,
       variables: {
-        sellProductInput: {
-          id: payload.id,
-          employee: payload.employee,
-          customer: payload.customer
+        sellInput: { 
+          pid: payload.pid,
+          epis: payload.epis,
+          ucpf: payload.ucpf
         }
       }
     })
@@ -63,7 +83,8 @@ const SELL_PRODUCT = async payload => {
 }
 
 export default {
+  NEW_PRODUCT_REGISTRY,
   NEW_PRODUCT,
   UPDATE_PRODUCT,
-  SELL_PRODUCT
+  SELL
 }

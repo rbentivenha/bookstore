@@ -7,15 +7,11 @@ const GET_SALES = async () => {
       query: gql`
         {
           sales {
-            id
-            pid
             price
-            title
             descrip
-            cfname
-            clname
-            efname
-            elname
+            saledate
+            customer
+            employee
           }
         }
       `

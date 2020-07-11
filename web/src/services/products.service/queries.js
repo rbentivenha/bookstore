@@ -11,7 +11,8 @@ const GET_PRODUCTS = async () => {
             price
             title
             descrip
-            status
+            epis
+            regdate
           }
         }
       `

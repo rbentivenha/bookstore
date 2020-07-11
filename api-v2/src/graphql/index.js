@@ -73,9 +73,28 @@ const typeDefs = gql`
     user_type: String
   }
 
+  type Product {
+    id: ID!
+    price: Float
+    title: String
+    descrip: String
+    epis: String
+    regdate: String
+  }
+
+  type Sale {
+    price: Float
+    descrip: String
+    saledate: String
+    customer: String
+    employee: String
+  }
+
   type Query {
     employees: [Employee]
     customers: [Customer]
+    products: [Product]
+    sales: [Sale]
   }
 
   input UserInput {
@@ -87,6 +106,14 @@ const typeDefs = gql`
     phone: String
     postal_code: String!
     user_type: String!
+  }
+
+  input ProductInput {
+    id: ID
+    regid: ID!
+    price: Float
+    title: String
+    descrip: String
   }
 
   input EmployeeInput {
@@ -108,6 +135,12 @@ const typeDefs = gql`
     date: String!
   }
 
+  input SellInput {
+    pid: ID!
+    epis: String!
+    ucpf: String!
+  }
+
   type Mutation {
     create_user(userInput: UserInput!): String!
     create_employee(employeeInput: EmployeeInput!): String!
@@ -115,7 +148,11 @@ const typeDefs = gql`
     update_user(userInput: UserInput!): String!
     update_employee(employeeInput: EmployeeInput!): String!
     update_address(addressInput: AddressInput!): String!
+    new_product_registry(epis: String!): ID!
     create_extra_hour(extraHourInput: ExtraHourInput!): String!
+    create_product(productInput: ProductInput!): ID!
+    update_product(productInput: ProductInput!): ID!
+    sell(sellInput: SellInput!): ID!
   }
 `
 

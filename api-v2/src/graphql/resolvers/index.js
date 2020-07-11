@@ -15,7 +15,8 @@ const resolvers = {
   },
   Mutation: {
     //   ...login.mutation,
-    //   ...products.mutation,
+    ...sales.mutation,
+    ...products.mutation,
     ...address.mutation,
     ...user.mutation,
     ...employees.mutation

@@ -1,6 +1,6 @@
 import Queries from './queries'
 
-const get_sales = async payload => {
+const get_sales = async () => {
   try {
     const {
       data: { sales }

@@ -12,12 +12,23 @@ const get_products = async () => {
   }
 }
 
+const new_product_registry = async (payload) => {
+  try {
+    const {
+      data: { new_product_registry }
+    } = await Mutations.NEW_PRODUCT_REGISTRY(payload)
+    return new_product_registry
+  } catch (err) {
+    throw err
+  }
+}
+
 const new_product = async (payload) => {
   try {
     const {
-      data: { createProduct }
+      data: { create_product }
     } = await Mutations.NEW_PRODUCT(payload)
-    return createProduct
+    return create_product
   } catch (err) {
     throw err
   }
@@ -26,20 +37,20 @@ const new_product = async (payload) => {
 const update_product = async (payload) => {
   try {
     const {
-      data: { updateProduct }
+      data: { update_product }
     } = await Mutations.UPDATE_PRODUCT(payload)
-    return updateProduct
+    return update_product
   } catch (err) {
     throw err
   }
 }
 
-const sell_product = async (payload) => {
+const sell = async (payload) => {
   try {
     const {
-      data: { updateProduct }
-    } = await Mutations.SELL_PRODUCT(payload)
-    return updateProduct
+      data: { sell }
+    } = await Mutations.SELL(payload)
+    return sell
   } catch (err) {
     throw err
   }
@@ -47,7 +58,8 @@ const sell_product = async (payload) => {
 
 export default {
   get_products,
+  new_product_registry,
   new_product,
   update_product,
-  sell_product
+  sell
 }

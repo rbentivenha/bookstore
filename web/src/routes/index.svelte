@@ -10,7 +10,7 @@
   async function handleLogIn() {
     try {
       // const user = await log_in(value);
-      session.set({user: user});
+      session.set({user: value});
       await goto("/employees");
     } catch (err) {
       console.error(err);
